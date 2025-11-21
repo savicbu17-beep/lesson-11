@@ -1,46 +1,46 @@
-# class Marker:
-#     def __init__(self, color, size):
-#         self.marker_color = color
-#         self.marker_size = size
-#
-#     def draw(self):
-#         print(f"Малюю кольором: {self.marker_color}, товщина лінії: {self.marker_size}")
-#
-#     def info(self):
-#         print(f"Маркер {self.marker_color}, товщина {self.marker_size}")
-#
-# # Створення об’єктів
-# m_red = Marker("червоний", 2)
-# m_blue = Marker("синій", 4)
-#
-# # Виклик методів
-# m_red.draw()
-# m_blue.draw()
-#
-# m_red.info()
-# m_blue.info()
+class BankAccount:
+    def __init__(self, owner, number, balance=0):
+        self.owner = owner
+        self.number = number
+        self.balance = balance
 
+    def deposit(self, amount):
+        self.balance + amount
+        print(f"{self.owner} ви поповннили на {amount} грн баланс {self.balance} грн")
 
-class Student:
-    def __init__(self, name, height, IT, hwork=0):
-        self.name = name
-        self.height = height
-        self.IT = IT
-        self.hwork = hwork
+    def withdraw(self, amount):
+        if amount < self.balance:
+            self.balance - amount
+            print(f"{self.owner} знято {amount} грн Залишок {self.balance} грн")
+        else:
+            print(f"{self.owner} недостатньо коштів")
 
-    def study(self):
-        self.hwork += 10
-        print(f"{self.name} вчится на {self.hwork}")
+class Bank:
+    def __init__(self):
+        self.accounts = {}
 
-    def work(self):
-        print(f"{self.name} працює щоб отримати досвід")
+    def add(self, acc):
+        self.accounts[acc.number] = acc
 
-    def rest(self):
-        print(f"{self.name} відпочиває після навчання")
+    def transfer(self, from_num, to_num, amount):
+        a1, a2 = self.accounts.get(from_num), self.accounts.get(to_num)
+        if a1 and a2 and a1.balance > amount:
+            a1.balance - amount
+            a2.balance + amount
+            print(f"Переказ {amount} грн з {a1.owner} до {a2.owner}")
+        else:
+            print("Помилка переказу")
 
-vova = Student(name="Вова", height=170)
-vova.study()
+# Приклад
+b = Bank()
+a1 = BankAccount("Ваня", "001", 5000)
+a2 = BankAccount("Максім", "002", 3000)
+b.add(a1)
+b.add(a2)
 
-vova.study()
-vova.work()
-vova.rest()
+a1.deposit(1000)
+a2.withdraw(500)
+b.transfer("001", "002", 2000)
+
+print(f"{a1.owner} {a1.balance} грн")
+print(f"{a2.owner} {a2.balance} грн")
